@@ -37,8 +37,11 @@ public class AuthenticationTest {
 			subject.logout();
 		}
 		
+		/**
+		 * test customized realm
+		 */
 		@Test
-		public void testCustomRealm(){
+		public void test2(){
 			
 			Factory<org.apache.shiro.mgt.SecurityManager> factory = 
 					new IniSecurityManagerFactory("classpath:shiro-realm.ini");
@@ -59,8 +62,11 @@ public class AuthenticationTest {
 			subject.logout();			
 		}
 		
+		/**
+		 * test multiple realms
+		 */
 		@Test
-		public void testMultiRealms(){
+		public void test3(){
 			
 			Factory<org.apache.shiro.mgt.SecurityManager> factory = 
 					new IniSecurityManagerFactory("classpath:shiro-multi-realm.ini");
@@ -79,7 +85,26 @@ public class AuthenticationTest {
 			
 			Assert.assertEquals(true, subject.isAuthenticated());
 			subject.logout();
+		}
+		
+		/**
+		 * test jdbc realm
+		 */
+		@Test
+		public void test4(){
 			
+			Factory<org.apache.shiro.mgt.SecurityManager> factory = 
+					new IniSecurityManagerFactory("classpath:shiro-jdbc-realm.ini");
+			org.apache.shiro.mgt.SecurityManager sm = factory.getInstance();
+			SecurityUtils.setSecurityManager(sm);
+			
+			Subject subject = SecurityUtils.getSubject();
+			UsernamePasswordToken token = new UsernamePasswordToken("xwarrior", "123456");
+			
+			subject.login(token);
+			
+			Assert.assertEquals(true, subject.isAuthenticated());
+			subject.logout();
 		}
 	
 }
