@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cn.raysun.persist.entity.User;
 import com.cn.raysun.service.IUserService;
 
+/**
+ * controller class
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
