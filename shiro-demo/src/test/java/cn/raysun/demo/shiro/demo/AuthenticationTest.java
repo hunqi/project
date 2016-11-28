@@ -1,16 +1,24 @@
 package cn.raysun.demo.shiro.demo;
 
+import org.junit.After;
 import org.junit.Assert;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
+import org.apache.shiro.util.ThreadContext;
 import org.junit.Test;
 
 public class AuthenticationTest {
+	
+		@After
+		public void tearDown(){
+			//unbind the subject from the thread to prevent the next test case 
+			//from being infected, this is required
+			ThreadContext.unbindSubject();
+		}
 	
 		/**
 		 * basic realm test
