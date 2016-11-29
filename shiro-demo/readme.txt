@@ -1,0 +1,1 @@
+Some exercise code of shiro, reference to https://github.com/zhangkaitao/shiro-example
