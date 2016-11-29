@@ -1,4 +1,4 @@
-package cn.raysun.demo.shiro.demo;
+package cn.raysun.demo.shiro.chapter3;
 
 import org.junit.After;
 import org.junit.Assert;
