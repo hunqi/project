@@ -1,7 +1,14 @@
 package cn.raysun.demo.shiro.chapter3;
 
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import org.h2.jdbcx.JdbcDataSource;
 import org.junit.After;
 import org.junit.Assert;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -36,7 +43,7 @@ public class AuthenticationTest {
 			try {
 				subject.login(token);
 			} catch (AuthenticationException e) {
-				System.out.println(String.format("%s didn't logged in.", "xwarrior"));
+				System.out.println("Invalid username/password");
 			}
 			//assert the user xwarrior has logged on
 			Assert.assertEquals(true, subject.isAuthenticated());
@@ -97,9 +104,16 @@ public class AuthenticationTest {
 		
 		/**
 		 * test jdbc realm
+		 * @throws SQLException 
 		 */
 		@Test
-		public void test4(){
+		public void test4() throws Exception{
+			
+			JdbcDataSource ds = new JdbcDataSource();
+			ds.setUrl("jdbc:h2:mem:shiro");
+			
+			ScriptRunner runner = new ScriptRunner(ds.getConnection());
+			runner.runScript(Resources.getResourceAsReader("sql/shiro.sql"));
 			
 			Factory<org.apache.shiro.mgt.SecurityManager> factory = 
 					new IniSecurityManagerFactory("classpath:shiro-jdbc-realm.ini");
