@@ -1,6 +1,8 @@
 package simpleframe;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
@@ -29,7 +31,13 @@ class SimpleFrame extends JFrame {
 	private static final int DEFAULT_HEIGHT = 200;
 
 	public SimpleFrame() {
-		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = kit.getScreenSize();
+		int screenWidth = screenSize.width;
+		int screenHeight = screenSize.height;
+
+		setSize(screenWidth / 2, screenHeight / 2);
+		setLocationByPlatform(true);
 	}
 
 }
