@@ -1,4 +1,4 @@
-package com.raysun.shirodemo.web.credentials;
+package com.raysun.shirodemo.credentials;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
