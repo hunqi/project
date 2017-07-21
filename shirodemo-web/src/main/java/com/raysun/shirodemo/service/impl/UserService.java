@@ -19,38 +19,35 @@ public class UserService implements IUserService {
 	private PasswordHelper passwordHelper;
 	
 	public User createUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		passwordHelper.encryptPassword(user);
+		return userDao.createUser(user);
 	}
 
 	public void changePassword(Long userId, String newPassword) {
-		// TODO Auto-generated method stub
-		
+		User user = userDao.findOne(userId);
+		user.setPassword(newPassword);		
+		passwordHelper.encryptPassword(user);
+		userDao.updateUser(user);
 	}
 
 	public void correlationRoles(Long userId, Long... roleIds) {
-		// TODO Auto-generated method stub
-		
+		userDao.correlationRoles(userId, roleIds);		
 	}
 
 	public void uncorrelationRoles(Long userId, Long... roleIds) {
-		// TODO Auto-generated method stub
-		
+		userDao.uncorrelationRoles(userId, roleIds);
 	}
 
 	public User findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDao.findByUsername(username);
 	}
 
 	public Set<String> findRoles(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDao.findRoles(username);
 	}
 
 	public Set<String> findPermissions(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDao.findPermissions(username);
 	}
 	
 }
