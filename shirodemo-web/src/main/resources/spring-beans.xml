@@ -5,7 +5,8 @@
        
        <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
        		<property name="driverClassName" value="org.h2.Driver"/>
-       		<property name="url" value="jdbc:h2:mem:shiroweb"/>
+       		<property name="url" value="jdbc:h2:~/test"/>
+       		<property name="username" value="my1stdb"/>
        </bean>
        
        <bean id="baseDao" abstract="true">
