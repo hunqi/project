@@ -24,6 +24,7 @@ public class RoleDaoImpl extends JdbcDaoSupport implements RoleDao {
 				psst.setString(1, Role.getRole());
 				psst.setString(2, Role.getDescription());
 				psst.setBoolean(3, Role.getAvailable());
+				
 				return psst;
 			}
 		}, keyHolder);

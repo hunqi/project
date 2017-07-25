@@ -15,21 +15,21 @@
 
 	<!-- 凭证匹配器 -->
 	<bean id="credentialsMatcher"
-		class="com.raysun.shirodemo.web.credentials.RetryLimitHashedCredentialsMatcher">
+		class="com.raysun.shirodemo.credentials.RetryLimitHashedCredentialsMatcher">
 		<constructor-arg ref="cacheManager" />
 		<property name="hashAlgorithmName" value="md5" />
 		<property name="hashIterations" value="2" />
-		<property name="storedCredentialsHexEncoded" />
+		<property name="storedCredentialsHexEncoded" value="true"/>
 	</bean>
 
-	<bean id="userRealm" class="com.raysun.shirodemo.web.realm.UserRealm">
-		<property name="userService" ref="userService"/>
+	<bean id="userRealm" class="com.raysun.shirodemo.realm.UserRealm">
+		<!-- <property name="userService" ref="userService"/> -->
 		<property name="credentialsMatcher" ref="credentialsMatcher"/>
 		<property name="cachingEnabled" value="true"/>
 		<property name="authenticationCachingEnabled" value="true"/>
-		<property name="authenticationCachingName" value="authenticationCache"/>
+		<property name="authenticationCacheName" value="authenticationCache"/>
 		<property name="authorizationCachingEnabled" value="true"/>
-		<property name="authorizationCachingName" value="authorizationCache"/>
+		<property name="authorizationCacheName" value="authorizationCache"/>
 	</bean>
 
 	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator"/>
@@ -53,7 +53,7 @@
 		<property name="sessionDAO" ref="sessionDAO"/>
 	</bean>
 	
-	<bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
+	<bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager" lazy-init="true">
 		<property name="realms">
 			<list><ref bean="userRealm"/></list>
 		</property>
@@ -69,4 +69,4 @@
 	
 	<!-- shiro生命周期处理器 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
-</beans>   
+</beans>

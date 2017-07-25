@@ -9,6 +9,8 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 
+import com.raysun.shirodemo.util.Logger;
+
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 	
 	private Cache<String, AtomicInteger> passwordRetryCache;
@@ -24,6 +26,8 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 		String username = (String) token.getPrincipal();
 		
 		AtomicInteger retryCount = passwordRetryCache.get(username);
+		
+		Logger.info("retryCount=%s", retryCount);
 		if(retryCount == null){
 			retryCount = new AtomicInteger(0);
 			passwordRetryCache.put(username, retryCount);

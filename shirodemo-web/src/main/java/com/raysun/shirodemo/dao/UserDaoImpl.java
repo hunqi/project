@@ -32,7 +32,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 				ps.setString(3, user.getSalt());
 				ps.setBoolean(4,  user.getLocked());
 				
-				return null;
+				return ps;
 			}
 		}, keyHolder);
 		
@@ -103,12 +103,12 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 	}
 
 	public Set<String> findRoles(String username) {
-		String sql = "select from sys_users u, sys_roles r, sys_users_roles ur where u.username=? and u.id=ur.userId and r.id=ur.role_id";
+		String sql = "select role from sys_users u, sys_roles r, sys_users_roles ur where u.username=? and u.id=ur.user_id and r.id=ur.role_id";
 		return new HashSet(getJdbcTemplate().queryForList(sql, String.class, username));
 	}
 
 	public Set<String> findPermissions(String username) {
-		String sql = "select permission from sys_users u, sys_roles r, sys_permissions p, sys_users_roles ur, sys_roles_permissions rp where u.username=? and u.id=ur.user_id and r.id=ur.role_id and r.id=rp.role_id and p.id=rp.permission_id";
+		String sql = "select permission permission from sys_users u, sys_roles r, sys_permissions p, sys_users_roles ur, sys_roles_permissions rp where u.username=? and u.id=ur.user_id and r.id=ur.role_id and r.id=rp.role_id and p.id=rp.permission_id";
 		return new HashSet(getJdbcTemplate().queryForList(sql, String.class, username));
 	}
 	

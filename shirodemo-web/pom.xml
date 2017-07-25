@@ -17,7 +17,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -128,6 +128,12 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.192</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.4.4</version>
+		</dependency>		
 
 		<dependency>
 			<groupId>com.alibaba</groupId>

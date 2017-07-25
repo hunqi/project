@@ -13,7 +13,7 @@ import com.raysun.shirodemo.entity.Permission;
 public class PermissionDaoImpl extends JdbcDaoSupport implements PermissionDao {
 
 	public Permission createPermission(final Permission permission) {
-		final String sql = "insert into sys_permission(permission, description, available) values(?, ?, ?)";
+		final String sql = "insert into sys_permissions(permission, description, available) values(?, ?, ?)";
 		
 		GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 		getJdbcTemplate().update(new PreparedStatementCreator(){
@@ -38,7 +38,7 @@ public class PermissionDaoImpl extends JdbcDaoSupport implements PermissionDao {
 		String sql = "delete from sys_roles_permission where permission_id=?";
 		getJdbcTemplate().update(sql, permissionId);
 		
-		sql = "delete from sys_permission where id=?";
+		sql = "delete from sys_permissions where id=?";
 		getJdbcTemplate().update(sql, permissionId);		
 	}
 

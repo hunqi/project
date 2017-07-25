@@ -1,5 +1,7 @@
 package com.raysun.shirodemo.realm;
 
+import javax.annotation.Resource;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -21,7 +23,7 @@ import com.raysun.shirodemo.service.api.IUserService;
 public class UserRealm extends AuthorizingRealm {
 
 	@Autowired
-	private IUserService userService;
+	private IUserService userservice;
 	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
@@ -29,8 +31,8 @@ public class UserRealm extends AuthorizingRealm {
 		String username = (String) principals.getPrimaryPrincipal();
 		
 		SimpleAuthorizationInfo authorInfo = new SimpleAuthorizationInfo();
-		authorInfo.setRoles(userService.findRoles(username));
-		authorInfo.setStringPermissions(userService.findPermissions(username));
+		authorInfo.setRoles(userservice.findRoles(username));
+		authorInfo.setStringPermissions(userservice.findPermissions(username));
 		
 		return authorInfo;
 	}
@@ -40,7 +42,7 @@ public class UserRealm extends AuthorizingRealm {
 			AuthenticationToken token) throws AuthenticationException {
 		String username = (String) token.getPrincipal();
 		
-		User user = userService.findByUsername(username);
+		User user = userservice.findByUsername(username);
 				
 		if(user == null){
 			throw new UnknownAccountException();
@@ -58,6 +60,21 @@ public class UserRealm extends AuthorizingRealm {
 				);
 		
 		return authenInfo;
+	}
+	
+	@Override
+	public void clearCachedAuthenticationInfo(PrincipalCollection principals) {
+		super.clearCachedAuthenticationInfo(principals);
+	}
+	
+	@Override
+	public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+		super.clearCachedAuthorizationInfo(principals);
+	}
+	
+	@Override
+	public void clearCache(PrincipalCollection principals) {
+		super.clearCache(principals);
 	}
 	
 	public void clearAllCachedAuthorizationInfo(){
