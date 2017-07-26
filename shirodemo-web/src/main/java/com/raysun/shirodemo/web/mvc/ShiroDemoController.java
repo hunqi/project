@@ -10,7 +10,7 @@ public class ShiroDemoController {
 	
 	@RequestMapping("/hello1")
     public String hello1() {
-		System.out.println("begin checking privilege.");
+		System.out.println("begin checking privilege by m1.");
         SecurityUtils.getSubject().checkRole("admin");
         return "success";
     }
@@ -18,6 +18,7 @@ public class ShiroDemoController {
     @RequiresRoles("admin")
     @RequestMapping("/hello2")
     public String hello2() {
+    	System.out.println("begin checking privilege by m2.");
         return "success";
     }
     

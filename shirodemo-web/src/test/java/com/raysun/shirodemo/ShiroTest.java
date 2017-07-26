@@ -20,9 +20,9 @@ import com.raysun.shirodemo.entity.Permission;
 import com.raysun.shirodemo.entity.Role;
 import com.raysun.shirodemo.entity.User;
 import com.raysun.shirodemo.realm.UserRealm;
-import com.raysun.shirodemo.service.api.IPermissionService;
-import com.raysun.shirodemo.service.api.IRoleService;
-import com.raysun.shirodemo.service.api.IUserService;
+import com.raysun.shirodemo.service.impl.PermissionService;
+import com.raysun.shirodemo.service.impl.RoleService;
+import com.raysun.shirodemo.service.impl.UserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:spring-beans.xml",
@@ -30,11 +30,11 @@ import com.raysun.shirodemo.service.api.IUserService;
 public class ShiroTest {
 
 	@Autowired
-	private IPermissionService permissionService;
+	private PermissionService permissionService;
 	@Autowired
-	private IRoleService roleService;
+	private RoleService roleService;
 	@Autowired
-	private IUserService userService;
+	private UserService userService;
 
 	@Autowired
 	private UserRealm userRealm;

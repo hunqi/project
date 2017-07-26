@@ -1,7 +1,5 @@
 package com.raysun.shirodemo.realm;
 
-import javax.annotation.Resource;
-
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -13,17 +11,17 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.raysun.shirodemo.entity.User;
-import com.raysun.shirodemo.service.api.IUserService;
+import com.raysun.shirodemo.service.impl.UserService;
 
-@Component
 public class UserRealm extends AuthorizingRealm {
 
-	@Autowired
-	private IUserService userservice;
+	private UserService userService;
+	
+	public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 	
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
@@ -31,8 +29,8 @@ public class UserRealm extends AuthorizingRealm {
 		String username = (String) principals.getPrimaryPrincipal();
 		
 		SimpleAuthorizationInfo authorInfo = new SimpleAuthorizationInfo();
-		authorInfo.setRoles(userservice.findRoles(username));
-		authorInfo.setStringPermissions(userservice.findPermissions(username));
+		authorInfo.setRoles(userService.findRoles(username));
+		authorInfo.setStringPermissions(userService.findPermissions(username));
 		
 		return authorInfo;
 	}
@@ -42,7 +40,7 @@ public class UserRealm extends AuthorizingRealm {
 			AuthenticationToken token) throws AuthenticationException {
 		String username = (String) token.getPrincipal();
 		
-		User user = userservice.findByUsername(username);
+		User user = userService.findByUsername(username);
 				
 		if(user == null){
 			throw new UnknownAccountException();
