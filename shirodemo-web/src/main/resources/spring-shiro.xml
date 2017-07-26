@@ -23,7 +23,7 @@
 	</bean>
 
 	<bean id="userRealm" class="com.raysun.shirodemo.realm.UserRealm">
-		<!-- <property name="userService" ref="userService"/> -->
+		<property name="userService" ref="userService"/>
 		<property name="credentialsMatcher" ref="credentialsMatcher"/>
 		<property name="cachingEnabled" value="true"/>
 		<property name="authenticationCachingEnabled" value="true"/>
