@@ -10,7 +10,7 @@ public class CalculatorProxy {
 	
 	public CalculatorProxy() {
 		if(calculator == null)
-			calculator = new AverageCapitalPusInterestCalculator();
+			calculator = new AverageCapitalPlusInterestCalculator();
 	}
 	
 	public BigDecimal getMonthlyPayments(Loan loan){

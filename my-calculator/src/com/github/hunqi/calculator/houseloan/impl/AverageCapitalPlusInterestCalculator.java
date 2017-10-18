@@ -5,7 +5,7 @@ import java.math.MathContext;
 
 import com.github.hunqi.calculator.houseloan.pojo.Loan;
 
-class AverageCapitalPusInterestCalculator implements Calculator {
+class AverageCapitalPlusInterestCalculator implements Calculator {
 
 	@Override
 	public BigDecimal getMonthlyPayments(Loan loan) {
