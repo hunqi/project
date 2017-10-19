@@ -1,14 +1,12 @@
 package com.github.hunqi.calculator.houseloan.client;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.Scanner;
 
 import com.github.hunqi.calculator.houseloan.impl.CalculatorProxy;
 import com.github.hunqi.calculator.houseloan.pojo.InterestRate;
 import com.github.hunqi.calculator.houseloan.pojo.Loan;
 import com.github.hunqi.calculator.houseloan.pojo.RepaymentMode;
-import com.github.hunqi.tool.P;
+import com.github.hunqi.tool.debug.P;
 
 public class LoanCalculatorClient {
 	public static void main(String[] args) {
@@ -26,7 +24,8 @@ public class LoanCalculatorClient {
 			Loan loan = new Loan(loanAmount, InterestRate.COMMERCIAL, repaymentYears*12);
 			CalculatorProxy calc = new CalculatorProxy(RepaymentMode.get(repaymentMode - 1));
 
-			P.rint("您的月还款额是：" + calc.getMonthlyPayments(loan) + " 元");
+			String messgeForMonthlyRepayment = repaymentMode == 1 ? "您的月还款额是：" : "您的首月还款额是：";
+			P.rint(messgeForMonthlyRepayment + calc.getMonthlyPayments(loan) + " 元");
 			P.rint(", ");
 			P.rint("您的总还款额是：" + calc.getTotalPayments(loan) + " 万元 ");
 			P.rintln("\n---------------------------------------------------");

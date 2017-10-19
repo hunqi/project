@@ -28,8 +28,8 @@ class AverageCapitalPlusInterestCalculator implements Calculator {
 	
 	@Override
 	public BigDecimal getTotalPayments(Loan loan) {
-		return getMonthlyPayments(loan).multiply(
-				BigDecimal.valueOf(loan.getRepaymentMonths()), MathContext.DECIMAL32);
+		return getMonthlyPayments(loan).divide(BigDecimal.valueOf(10000)).multiply(
+				BigDecimal.valueOf(loan.getRepaymentMonths()), new MathContext(8));
 	}
 	
 	

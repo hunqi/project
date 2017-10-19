@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 
 import com.github.hunqi.calculator.houseloan.pojo.Loan;
+//import com.github.hunqi.tool.debug.P; //just for debugging
 import com.github.hunqi.tool.P;
 
 class AverageCapitalCalculator implements Calculator {
@@ -56,18 +57,5 @@ class AverageCapitalCalculator implements Calculator {
 		P.rintln("monthly rate is : " + monthlyInterestRate);
 		return monthlyInterestRate;
 	}
-	
-	public static void main(String[] args) {
-		Calculator c = new AverageCapitalCalculator();
-		
-		int hasRepaidMonths = 239;
-		Loan loan = new Loan(50, 4.9, 240, hasRepaidMonths);
-		P.rintln("贷款情况如下：" + loan);
-		P.rintln("第 " + ++hasRepaidMonths + " 期的应还款额是： " + 
-				c.getMonthlyPayments(loan));
-		
-		P.rintln("总还款额是 ：" + c.getTotalPayments(loan) + " 万");
-	}
-
 	
 }
