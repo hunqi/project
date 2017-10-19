@@ -12,11 +12,12 @@ class AverageCapitalPlusInterestCalculator implements Calculator {
 		
 		BigDecimal amount = BigDecimal.valueOf(loan.getAmount());
 		BigDecimal annualRate = BigDecimal.valueOf(loan.getAnnualInterestRate()).divide(BigDecimal.valueOf(100));
-		
 		BigDecimal monthlyRate = annualRate.divide(BigDecimal.valueOf(12), MathContext.DECIMAL64);
+		
 		BigDecimal monthlyPayments = amount.multiply(monthlyRate.
 				multiply(getMonthlyPaymentsFactor(monthlyRate, loan.getRepaymentMonths()))).
-				divide(getMonthlyPaymentsFactor(monthlyRate, loan.getRepaymentMonths()).subtract(BigDecimal.ONE), MathContext.DECIMAL64);
+				divide(getMonthlyPaymentsFactor(monthlyRate, loan.getRepaymentMonths()).subtract(BigDecimal.ONE), MathContext.DECIMAL64).
+				multiply(BigDecimal.valueOf(10000), new MathContext(6));
 		
 		return monthlyPayments;
 	}
