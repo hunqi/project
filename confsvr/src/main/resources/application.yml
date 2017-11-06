@@ -34,6 +34,8 @@ spring:
   cloud:
      config:
        server:
+           encrypt:
+              enabled: false
            native:
 #              searchLocations: file://D:/config-repo/organizationservice, file://D:/config-repo/licensingservice
               searchLocations: classpath:config/,classpath:config/licensingservice, classpath:config/organizationservice
