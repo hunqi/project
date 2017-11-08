@@ -28,6 +28,16 @@
 
 server:
    port: 8888
+   
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/  
+
 spring:
   profiles:
     active: native
@@ -38,5 +48,6 @@ spring:
               enabled: false
            native:
 #              searchLocations: file://D:/config-repo/organizationservice, file://D:/config-repo/licensingservice
-              searchLocations: classpath:config/,classpath:config/licensingservice, classpath:config/organizationservice
+              searchLocations: classpath:config/,classpath:config/licensingservice, 
+                   classpath:config/organizationservice, classpath:config/zuulservice
           
