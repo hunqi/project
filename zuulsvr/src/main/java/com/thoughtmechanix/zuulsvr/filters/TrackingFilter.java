@@ -3,10 +3,12 @@ package com.thoughtmechanix.zuulsvr.filters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
+@Component
 public class TrackingFilter extends ZuulFilter {
 	
 	private static final int      FILTER_ORDER =  1;

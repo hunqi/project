@@ -22,8 +22,8 @@ public class InvestmentCalculator {
 
 	public static void main(String[] args) {
 		// 投资n年，每年投资1w，年利率8%， 计算n年后 "本金 + 收益" 的总额
-		int years = 10;
-		double rate = 0.08;
+		int years = 20;
+		double rate = 0.06;
 		
 		InvestmentCalculator calculator1 = new InvestmentCalculator();		
 		BigDecimal totalIncome = BigDecimal.ZERO;

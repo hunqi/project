@@ -68,7 +68,15 @@ public class LicenseService {
 	public License getLicense(String organizationId, String licenseId) {
 		License license = licenseRepository.findByOrganizationIdAndLicenseId(
 				organizationId, licenseId);
-		return license.withComment(config.getExampleProperty());
+		
+		Organization org = getOrganization(organizationId);
+		
+		return license
+                .withOrganizationName( org.getName())
+                .withContactName( org.getContactName())
+                .withContactEmail( org.getContactEmail() )
+                .withContactPhone( org.getContactPhone() )
+                .withComment(config.getExampleProperty());
 	}
 	
 	public License getLicense(String organizationId,String licenseId, String clientType) {
@@ -82,6 +90,11 @@ public class LicenseService {
                 .withContactEmail( org.getContactEmail() )
                 .withContactPhone( org.getContactPhone() )
                 .withComment(config.getExampleProperty());
+    }
+	
+	@HystrixCommand
+    private Organization getOrganization(String organizationId) {
+        return organizationRestClient.getOrganization(organizationId);
     }
 	
 	private void randomlyRunLong() {

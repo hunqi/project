@@ -14,13 +14,13 @@ import com.thoughtmechanix.organization.utils.UserContextFilter;
 @EnableEurekaClient
 @EnableCircuitBreaker
 public class Application {
-	
+
 	@Bean
-    public Filter userContextFilter() {
-        UserContextFilter userContextFilter = new UserContextFilter();
-        return userContextFilter;
-    }
-	
+	public Filter userContextFilter() {
+		UserContextFilter userContextFilter = new UserContextFilter();
+		return userContextFilter;
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
