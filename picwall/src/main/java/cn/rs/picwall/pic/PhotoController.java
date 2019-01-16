@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/pic")
-public class PicController {
+public class PhotoController {
 
     @GetMapping("/display")
     public String display(Model model) {

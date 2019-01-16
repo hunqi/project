@@ -10,4 +10,6 @@ public class PicWallApplication {
         SpringApplication.run(PicWallApplication.class, args);
     }
 
+
+
 }

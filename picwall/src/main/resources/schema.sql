@@ -1,0 +1,10 @@
+CREATE TABLE if not exists t_picture (
+    id int AUTO_INCREMENT,
+    data BINARY(524288),
+    cdate timestamp
+);
+
+CREATE SEQUENCE IF NOT EXISTS seq_picture START WITH 1
+INCREMENT BY 1
+MINVALUE 1
+MAXVALUE 999999999;
