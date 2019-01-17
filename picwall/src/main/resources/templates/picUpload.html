@@ -6,7 +6,7 @@
 </div>
 
 <div>
-    <form method="POST" enctype="multipart/form-data" action="/">
+    <form method="POST" enctype="multipart/form-data" action="/upload/">
         <table>
             <tr>
                 <td>File to upload:</td>
@@ -24,10 +24,18 @@
     <ul>
         <li th:each="file : ${files}">
             <!--<a th:href="${file}" th:text="${file}"/>-->
-            <img th:src="${file}"/>
+            <img th:src="${file.content}"/>
+            <input type="button" value="delete" th:imgId="${file.id}" th:onclick="delete(this)"/>
         </li>
     </ul>
 </div>
-
 </body>
+
+<script type="text/javascript">
+
+    function delete(obj){
+
+    }
+
+</script>
 </html>

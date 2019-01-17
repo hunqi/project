@@ -6,6 +6,8 @@ public interface PictureService {
 
     void save(byte[] picContent);
 
-    List<String> findAll();
+    List<PictureVO> findAll();
+
+    void deleteById(int id);
 
 }

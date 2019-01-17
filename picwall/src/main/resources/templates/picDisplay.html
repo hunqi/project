@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pic Wall</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div align="center">
+    <p th:text="'Welcome to pic wall!'" style="font-size:30px;"/>
+</div>
+
+<div align="center">
+    <ul>
+        <!--<li th:each="file : ${files}">-->
+        <!--<a th:href="${file}" th:text="${file}"/>-->
+        <img id="currentImage" th:src="${files[0].content}" />
+        <!--</li>-->
+    </ul>
+    <ul>
+        <span th:each="file : ${files}">
+            <button th:onclick="show(this)" th:text="${files.indexOf(file)} + 1">1</button>
+            <input type="hidden" th:value="${file.content}"/>
+        </span>
+    </ul>
+
+</div>
+
+<script type="text/javascript">
+    function show(obj){
+        document.getElementById('currentImage').src = obj.nextElementSibling.value;
+    }
+</script>
+</body>
+</html>

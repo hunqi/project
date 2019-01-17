@@ -14,4 +14,6 @@ public interface PictureDao extends JpaRepository<Picture, Integer> {
 
     Picture findById(int id);
 
+
+
 }

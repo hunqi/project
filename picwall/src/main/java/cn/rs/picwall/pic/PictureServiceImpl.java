@@ -24,14 +24,20 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public List<String> findAll() {
+    public List<PictureVO> findAll() {
         List<Picture> latest5 = pictureDao.findAll();
-        List<String> images = new ArrayList<>();
+        List<PictureVO> images = new ArrayList<>();
 
         for (Picture p : latest5){
-            images.add("data:image/png;base64," + Base64.getEncoder().encodeToString(p.getData()));
+            PictureVO pv = new PictureVO(p.getId(), "data:image/png;base64," + Base64.getEncoder().encodeToString(p.getData()));
+            images.add(pv);
         }
 
         return images;
+    }
+
+    @Override
+    public void deleteById(int id){
+        pictureDao.deleteById(id);
     }
 }

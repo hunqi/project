@@ -1,22 +1,23 @@
 package cn.rs.picwall.pic;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/pic")
+@RequestMapping("/display")
 public class PhotoController {
 
-    @GetMapping("/display")
-    public String display(Model model) {
-        return "displayPics";
-    }
+    @Autowired
+    private PictureService pictureService;
 
-    @GetMapping("/upload")
-    public String upload(Model model){
-        return "upload";
+    @GetMapping("/")
+    public String display(Model model) {
+        model.addAttribute("files", pictureService.findAll());
+
+        return "picDisplay";
     }
 
 }
