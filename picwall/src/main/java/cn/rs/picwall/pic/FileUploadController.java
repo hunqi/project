@@ -45,9 +45,10 @@ public class FileUploadController {
     }
 
     @DeleteMapping("/")
-    public String deleteById(@RequestParam("id") int id){
+    public String deleteById(@RequestParam("id") int id) {
+        System.out.println("id=" + id);
         pictureService.deleteById(id);
-        return "redirect:/upload/";
+        return "picUpload";
     }
 
     @ExceptionHandler(ServiceException.class)
