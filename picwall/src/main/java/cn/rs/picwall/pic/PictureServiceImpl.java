@@ -1,5 +1,6 @@
 package cn.rs.picwall.pic;
 
+import cn.rs.picwall.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,9 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public void save(byte[] picContent) {
+        int maxImageSize = 512 * 1024;
         Picture pic = new Picture();
-        pic.setData(picContent);
+        pic.setData(picContent.length > maxImageSize ? ImageUtil.resize(picContent, maxImageSize) : picContent);
         pic.setCdate(LocalDateTime.now());
 
         pictureDao.save(pic);
@@ -28,7 +30,7 @@ public class PictureServiceImpl implements PictureService {
         List<Picture> latest5 = pictureDao.findAll();
         List<PictureVO> images = new ArrayList<>();
 
-        for (Picture p : latest5){
+        for (Picture p : latest5) {
             PictureVO pv = new PictureVO(p.getId(), "data:image/png;base64," + Base64.getEncoder().encodeToString(p.getData()));
             images.add(pv);
         }
@@ -37,7 +39,7 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public void deleteById(int id){
+    public void deleteById(int id) {
         pictureDao.deleteById(id);
     }
 }
