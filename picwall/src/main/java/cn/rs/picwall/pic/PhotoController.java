@@ -13,7 +13,7 @@ public class PhotoController {
     @Autowired
     private PictureService pictureService;
 
-    @GetMapping("/")
+    @GetMapping
     public String display(Model model) {
         model.addAttribute("files", pictureService.findAll());
 

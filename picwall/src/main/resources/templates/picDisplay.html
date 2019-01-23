@@ -3,32 +3,100 @@
 <head>
     <title>Pic Wall</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+        .selected {
+            background-color:#2266ff;
+        }
+
+        .pageBtn {}
+    </style>
 </head>
 <body>
 <div align="center">
-    <p th:text="'Welcome to pic wall!'" style="font-size:30px;"/>
+    <p id="banner" th:text="'Welcome to Pic Wall!'" style="font-size:30px;font-family:Georgia, serif;"/>
 </div>
 
 <div align="center">
     <ul>
-        <!--<li th:each="file : ${files}">-->
-        <!--<a th:href="${file}" th:text="${file}"/>-->
-        <img id="currentImage" th:src="${files[0].content}" />
-        <!--</li>-->
+        <img id="currentImage" th:src="${files[0].content}"/>
     </ul>
     <ul>
-        <span th:each="file : ${files}">
-            <button th:onclick="show(this)" th:text="${files.indexOf(file)} + 1">1</button>
+        <button id="prevBtn" hidden="true" th:onclick="prev(this)">Prev</button>
+        <span th:each="file : ${files}" th:if="${files.indexOf(file) < 5}">
+            <button th:onclick="show(this)" th:text="${files.indexOf(file)} + 1"
+                    th:seq="${files.indexOf(file)}"
+                    class="pageBtn">1</button>
             <input type="hidden" th:value="${file.content}"/>
         </span>
+        <button id="nextBtn" th:if="${files.size() > 1}" th:onclick="next()">Next</button>
+        <input type="hidden" id="pageSize" th:value="${files.size()}"/>
     </ul>
 
 </div>
 
 <script type="text/javascript">
     function show(obj){
+        var currentItem = document.getElementsByClassName('selected')[0];
+        if(currentItem){
+            currentItem.className= currentItem.className.replace(' selected', '');
+        }
+
+        obj.className=obj.className + ' selected';
         document.getElementById('currentImage').src = obj.nextElementSibling.value;
+
+        var seqNo = Number.parseInt(obj.attributes['seq'].value);
+
+        // prev button
+        if(seqNo == 0)
+            document.getElementById('prevBtn').hidden=true;
+        else
+            document.getElementById('prevBtn').hidden=false;
+
+        //next button
+        var pageSize = document.getElementById('pageSize').value;
+        if((seqNo + 1) == pageSize)
+            document.getElementById('nextBtn').hidden=true;
+        else
+            document.getElementById('nextBtn').hidden=false;
     }
+
+    function next(){
+        var currentItem = document.getElementsByClassName('selected')[0],
+            pageButtons = document.getElementsByClassName('pageBtn'),
+            pageSize = document.getElementById('pageSize').value;
+
+        if(currentItem){
+            var seqNo = Number.parseInt(currentItem.attributes['seq'].value);
+            if((seqNo + 2) == pageSize){
+                document.getElementById('nextBtn').hidden=true;
+            }
+            currentItem.className = currentItem.className.replace(' selected','');
+            pageButtons[seqNo + 1].click();
+        }else{
+            document.getElementsByClassName('pageBtn')[0].click();
+        }
+    }
+
+    function prev(obj){
+        var currentItem = document.getElementsByClassName('selected')[0];
+        var pageButtons = document.getElementsByClassName('pageBtn');
+        if(currentItem){
+            var seqNo = Number.parseInt(currentItem.attributes['seq'].value);
+            if(seqNo == 1){
+                obj.hidden = true;
+                pageButtons[0].click();
+            }else{
+                pageButtons[seqNo - 1].click();
+                document.getElementById('nextBtn').hidden=false;
+            }
+        }
+    }
+
+
+
+
+
+
 </script>
 </body>
 </html>

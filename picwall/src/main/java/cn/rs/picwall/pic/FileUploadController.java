@@ -17,20 +17,20 @@ public class FileUploadController {
     @Autowired
     private PictureService pictureService;
 
-    @GetMapping("/")
+    @GetMapping
     public String listUploadedFiles(Model model) throws IOException {
         model.addAttribute("files", pictureService.findAll());
         return "picUpload";
     }
 
-    @PostMapping("/")
+    @PostMapping
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
         try {
             if (file == null || file.getBytes().length == 0) {
                 redirectAttributes.addFlashAttribute("message",
                         "No file selected !");
-                return "redirect:/upload/";
+                return "redirect:/upload";
             }
 
             pictureService.save(file.getBytes());
@@ -41,10 +41,10 @@ public class FileUploadController {
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/upload/";
+        return "redirect:/upload";
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping
     public String deleteById(@RequestParam("id") int id) {
         System.out.println("id=" + id);
         pictureService.deleteById(id);

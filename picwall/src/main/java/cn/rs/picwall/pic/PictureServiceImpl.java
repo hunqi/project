@@ -17,7 +17,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public void save(byte[] picContent) {
-        int maxImageSize = 512 * 1024;
+        int maxImageSize = 512 * 768;
         Picture pic = new Picture();
         pic.setData(picContent.length > maxImageSize ? ImageUtil.resize(picContent, maxImageSize) : picContent);
         pic.setCdate(LocalDateTime.now());
