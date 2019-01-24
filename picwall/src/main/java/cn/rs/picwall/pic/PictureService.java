@@ -8,6 +8,8 @@ public interface PictureService {
 
     List<PictureVO> findAll();
 
+    List<PictureVO> findForPager(Page page);
+
     void deleteById(int id);
 
 }

@@ -25,4 +25,12 @@ public class PictureVO {
     public void setContent(String content) {
         this.content = content;
     }
+
+    @Override
+    public String toString() {
+        return "PictureVO{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

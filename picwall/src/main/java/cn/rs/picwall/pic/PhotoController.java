@@ -15,7 +15,7 @@ public class PhotoController {
 
     @GetMapping
     public String display(Model model) {
-        model.addAttribute("files", pictureService.findAll());
+        model.addAttribute("files", pictureService.findForPager(null));
 
         return "picDisplay";
     }

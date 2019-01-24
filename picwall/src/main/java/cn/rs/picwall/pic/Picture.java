@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "t_picture")
-class Picture {
+public class Picture {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator="seq_picture")
-    @SequenceGenerator(name="seq_picture",sequenceName="seq_picture", allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_picture")
+    @SequenceGenerator(name = "seq_picture", sequenceName = "seq_picture", allocationSize = 1)
     private int id;
 
     @Column(name = "data")
@@ -41,5 +41,13 @@ class Picture {
 
     public void setCdate(LocalDateTime cdate) {
         this.cdate = cdate;
+    }
+
+    @Override
+    public String toString() {
+        return "Picture{" +
+                "id=" + id +
+                ", cdate=" + cdate +
+                '}';
     }
 }

@@ -1,6 +1,8 @@
 package cn.rs.picwall.pic;
 
 import cn.rs.picwall.util.ImageUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Service
 public class PictureServiceImpl implements PictureService {
+    private static final Logger logger = LoggerFactory.getLogger(PictureServiceImpl.class);
 
     @Autowired
     private PictureDao pictureDao;
@@ -37,6 +40,35 @@ public class PictureServiceImpl implements PictureService {
 
         return images;
     }
+
+    private static final int DEFAULT_PAGE_SIZE = 5;
+
+    @Override
+    public List<PictureVO> findForPager(Page page) {
+
+        if (page == null || page.getNumber() <= 0){
+            page = new Page();
+            page.setSize(DEFAULT_PAGE_SIZE);
+            page.setNumber(1);
+        }
+
+        logger.info("Query records of page  {}", page.getNumber());
+
+
+        int start = page.getSize() * (page.getNumber() - 1) + 1;
+        int end = page.getSize() * page.getNumber() + 1;
+
+        List<Picture> dbPics = pictureDao.findForPager(start, end);
+        List<PictureVO> displayPics = new ArrayList<>();
+
+        for (Picture p : dbPics) {
+            PictureVO pv = new PictureVO(p.getId(), "data:image/png;base64," + Base64.getEncoder().encodeToString(p.getData()));
+            displayPics.add(pv);
+        }
+
+        return displayPics;
+    }
+
 
     @Override
     public void deleteById(int id) {

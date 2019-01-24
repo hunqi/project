@@ -14,6 +14,9 @@ public interface PictureDao extends JpaRepository<Picture, Integer> {
 
     Picture findById(int id);
 
+    @Query(value = "select t2.id, t2.data, t2.cdate from (SELECT t.*, rownum rn FROM t_picture t WHERE rownum < ?2) t2 " +
+            "WHERE t2.rn >= ?1 ", nativeQuery = true)
+    List<Picture> findForPager(int start, int end);
 
 
 }

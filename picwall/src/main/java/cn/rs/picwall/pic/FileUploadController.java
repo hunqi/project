@@ -19,7 +19,7 @@ public class FileUploadController {
 
     @GetMapping
     public String listUploadedFiles(Model model) throws IOException {
-        model.addAttribute("files", pictureService.findAll());
+        model.addAttribute("files", pictureService.findForPager(null));
         return "picUpload";
     }
 
