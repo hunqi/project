@@ -39,7 +39,7 @@
 <script type="text/javascript">
 
     function deletePic(obj){
-        del('/upload', function(){window.location.reload();}, 'id=' + obj.attributes.imgId.value);
+        Ajax.del('/upload', function(){window.location.reload();}, 'id=' + obj.attributes.imgId.value);
     }
 
 
