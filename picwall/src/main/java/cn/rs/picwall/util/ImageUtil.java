@@ -5,11 +5,11 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class ImageUtil {
 
@@ -53,29 +53,5 @@ public class ImageUtil {
             return null;
         }
     }
-
-    /*public static void main(String[] args) throws IOException {
-        String basePath = "C:\\Users\\Public\\Pictures\\Sample Pictures";
-        String fileName = "newChrysanthemum.jpg";
-
-        try (InputStream in = Files.newInputStream(Paths.get(basePath, fileName))) {
-
-            byte[] buf = new byte[48];
-            int b = -1;
-
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            while ((b = in.read(buf)) != -1) {
-                out.write(buf, 0, b);
-            }
-            out.flush();
-
-            byte[] result = resize(out.toByteArray(), 512 * 1024);
-            try (OutputStream out2 = Files.newOutputStream(Paths.get(basePath, "new" + fileName))){
-                out2.write(result);
-            }
-
-            out.close();
-        }
-    }*/
 
 }

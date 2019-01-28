@@ -32,7 +32,7 @@ var Ajax = {
 
     	xmlHttp.setRequestHeader('Content-Type', 'application/json;');
 
-    	if(requestType==='POST'){
+    	if(requestType==='POST' || requestType === 'DELETE'){
     		xmlHttp.setRequestHeader('X-CSRF-TOKEN', document.getElementsByName('_csrf')[0].content);
     	}
 

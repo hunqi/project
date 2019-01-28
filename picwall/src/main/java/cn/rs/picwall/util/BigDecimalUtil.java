@@ -23,11 +23,4 @@ public class BigDecimalUtil {
         return r;
     }
 
-    public static void main(String[] args) {
-        System.out.println(sqrt(new BigDecimal(2)));
-        System.out.println(sqrt(new BigDecimal(3)));
-        System.out.println(sqrt(new BigDecimal(9)));
-        System.out.println(sqrt(new BigDecimal(0.999333)));
-    }
-
 }
