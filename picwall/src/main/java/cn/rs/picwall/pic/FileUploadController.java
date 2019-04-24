@@ -35,22 +35,27 @@ public class FileUploadController implements HandlerExceptionResolver {
     }
 
     @PostMapping
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
+    public String handleFileUpload(@RequestParam("files") MultipartFile[] files,
                                    RedirectAttributes redirectAttributes) {
-        try {
-            if (file == null || file.getBytes().length == 0) {
-                redirectAttributes.addFlashAttribute("message",
-                        "No file selected !");
-                return "redirect:/upload";
+
+        if (files != null && files.length > 0) {
+            String fileNames = "";
+            for (MultipartFile file : files) {
+                try {
+                    pictureService.save(file.getBytes());
+                } catch (IOException e) {
+                    throw new ServiceException(e, "Failed to save file content");
+                }
+
+                fileNames += file.getOriginalFilename()+" ";
             }
-
-            pictureService.save(file.getBytes());
-        } catch (IOException e) {
-            throw new ServiceException(e, "Failed to save file content");
+            redirectAttributes.addFlashAttribute("message",
+                    "You successfully uploaded " + fileNames + "!");
+        } else {
+            redirectAttributes.addFlashAttribute("message",
+                    "No file selected !");
+            return "redirect:/upload";
         }
-
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
 
         return "redirect:/upload";
     }
@@ -70,10 +75,10 @@ public class FileUploadController implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         Map<String, Object> model = new HashMap<>();
-        if (ex instanceof MaxUploadSizeExceededException){
+        if (ex instanceof MaxUploadSizeExceededException) {
             model.put("errors", "Maximum upload size exceeded.");
             logger.error("Exceed max upload size.{}", ex.getMessage());
-        }else {
+        } else {
             model.put("errors", "Unexpected error: " + "System error.");
             logger.error("System error.{}", ex.getMessage());
         }
