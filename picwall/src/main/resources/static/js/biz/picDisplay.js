@@ -2,6 +2,23 @@ window.onbeforeunload=function(){
     document.getElementById('pageNumber').value = 1;
 };
 
+document.onkeydown=function(event){
+    if(event.keyCode==37){
+        prev();
+        return;
+    }
+
+    if(event.keyCode==39){
+        next();
+        return;
+    }
+
+//    if (event.keyCode==13){
+//        console.log('enter key');
+//        return;
+//    }
+}
+
 function show(prevIdx, nextIdx, thisBtn){
     var pageSize = document.getElementById('pageSize').value,
         pageButtons = document.getElementsByClassName('pageBtn'),
@@ -9,7 +26,6 @@ function show(prevIdx, nextIdx, thisBtn){
 
     //for prev button
     if(prevIdx == 0 && pageNumberVal > 1){
-        debugger
         document.getElementById('pageNumber').value = pageNumberVal - 1;
         Ajax.get('/pager?size='+ pageSize +'&number='+ (pageNumberVal - 1) +'', function(){
             if(xmlHttp && xmlHttp.response){

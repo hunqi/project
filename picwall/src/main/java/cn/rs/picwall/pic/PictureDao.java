@@ -9,13 +9,14 @@ import java.util.List;
 @Repository
 public interface PictureDao extends JpaRepository<Picture, Integer> {
 
-//    @Query(value = "SELECT id, data, cdate FROM t_picture")
-//    List<Picture> findLatest5();
+//    @Query(value = "select * from (SELECT t.*, rownum rn FROM t_picture t ORDER BY cdate desc)")
+//    List<Picture> findLatest(int size);
 
     Picture findById(int id);
 
-    @Query(value = "select t2.id, t2.data, t2.cdate from (SELECT t.*, rownum rn FROM t_picture t WHERE rownum < ?2) t2 " +
-            "WHERE t2.rn >= ?1 ", nativeQuery = true)
+    @Query(value = "select t2.id, t2.data, t2.cdate from " +
+            "(SELECT t.*, rownum rn FROM (select t3.* from t_picture t3 order by t3.cdate desc) t WHERE rownum <= ?2) t2 " +
+            "WHERE t2.rn > ?1 ", nativeQuery = true)
     List<Picture> findForPager(int start, int end);
 
 

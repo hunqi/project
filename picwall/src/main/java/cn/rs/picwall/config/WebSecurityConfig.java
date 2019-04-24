@@ -23,12 +23,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .httpBasic();
     }
 
-    @Autowired
-    private IpInterceptor ipInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(ipInterceptor).addPathPatterns("/upload");
-    }
+//    @Autowired
+//    private IpInterceptor ipInterceptor;
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(ipInterceptor).addPathPatterns("/upload");
+//    }
 
 }

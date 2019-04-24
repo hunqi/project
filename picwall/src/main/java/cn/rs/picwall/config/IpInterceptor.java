@@ -4,6 +4,7 @@ import cn.rs.picwall.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -15,12 +16,12 @@ import java.util.List;
 /**
  * This interceptor is provided to control the request ip client
  */
-@Component
+//@Component
 public class IpInterceptor implements HandlerInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(IpInterceptor.class);
 
-    @Value("${ip.whitelist}")
+//    @Value("${ip.whitelist}")
     private String ipWhitelist;
 
     @Override
