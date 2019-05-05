@@ -1,20 +1,20 @@
-package cn.rs.picwall.pic;
+package cn.rs.picwall.pic.pojo.vo;
 
-public class PictureVO {
+public class PictureResponse {
 
-    private int id;
+    private long id;
     private String content;
 
-    public PictureVO(int id, String content) {
+    public PictureResponse(long id, String content) {
         this.id = id;
         this.content = content;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -28,7 +28,7 @@ public class PictureVO {
 
     @Override
     public String toString() {
-        return "PictureVO{" +
+        return "PictureResponse{" +
                 "id=" + id +
                 ", content='" + content + '\'' +
                 '}';

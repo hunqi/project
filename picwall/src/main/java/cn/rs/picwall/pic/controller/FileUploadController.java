@@ -1,5 +1,8 @@
-package cn.rs.picwall.pic;
+package cn.rs.picwall.pic.controller;
 
+import cn.rs.picwall.pic.pojo.exception.ServiceException;
+import cn.rs.picwall.pic.pojo.vo.PictureRequest;
+import cn.rs.picwall.pic.service.PictureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +45,12 @@ public class FileUploadController implements HandlerExceptionResolver {
             String fileNames = "";
             for (MultipartFile file : files) {
                 try {
-                    pictureService.save(file.getBytes());
+                    pictureService.save(new PictureRequest(file.getOriginalFilename(), file.getBytes()));
                 } catch (IOException e) {
                     throw new ServiceException(e, "Failed to save file content");
                 }
 
-                fileNames += file.getOriginalFilename()+" ";
+                fileNames += file.getOriginalFilename() + " ";
             }
             redirectAttributes.addFlashAttribute("message",
                     "You successfully uploaded " + fileNames + "!");

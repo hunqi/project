@@ -1,4 +1,4 @@
-package cn.rs.picwall.pic;
+package cn.rs.picwall.pic.pojo.vo;
 
 public class Page {
 

@@ -18,7 +18,7 @@ public class Folder extends BaseEntity {
     private User user;
 
     @OneToMany(mappedBy = "folder")
-    private List<Pic> pics;
+    private List<Picture> pics;
 
     public long getId() {
         return id;
@@ -44,11 +44,11 @@ public class Folder extends BaseEntity {
         this.user = user;
     }
 
-    public List<Pic> getPics() {
+    public List<Picture> getPics() {
         return pics;
     }
 
-    public void setPics(List<Pic> pics) {
+    public void setPics(List<Picture> pics) {
         this.pics = pics;
     }
 

@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "t_pic")
-public class Pic extends BaseEntity {
+public class Picture extends BaseEntity {
 
     @Id
     private long id;
@@ -53,7 +53,7 @@ public class Pic extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Pic{" +
+        return "Picture{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cdate='" + getCdate() + '\'' +
