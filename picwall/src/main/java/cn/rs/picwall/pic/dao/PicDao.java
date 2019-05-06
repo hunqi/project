@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface PicDao extends JpaRepository<Picture, Integer> {
+public interface PicDao extends JpaRepository<Picture, Long> {
 
     List<Picture> findByFolder(Folder folder);
 
@@ -16,5 +16,7 @@ public interface PicDao extends JpaRepository<Picture, Integer> {
                     "join t_user t3 on t2.id_user=t3.id " +
                     "where t3.name=?1 order by t.cdate desc limit ?2", nativeQuery = true)
     List<Picture> findLatest(String userName, int limit);
+
+
 
 }

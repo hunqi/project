@@ -16,6 +16,6 @@ public interface PictureService {
 
     List<PictureResponse> findForPager(Page page);
 
-    void deleteById(int id);
+    void deleteById(long id);
 
 }

@@ -83,9 +83,8 @@ public class PictureServiceImpl implements PictureService {
         return displayedPics;
     }
 
-
     @Override
-    public void deleteById(int id) {
+    public void deleteById(long id) {
         picDao.deleteById(id);
     }
 }

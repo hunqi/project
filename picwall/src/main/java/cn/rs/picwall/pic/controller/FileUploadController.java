@@ -64,7 +64,7 @@ public class FileUploadController implements HandlerExceptionResolver {
     }
 
     @DeleteMapping
-    public String deleteById(@RequestParam("id") int id) {
+    public String deleteById(@RequestParam("id") long id) {
         System.out.println("id=" + id);
         pictureService.deleteById(id);
         return "picUpload";

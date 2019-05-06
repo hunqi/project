@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface FolderDao extends JpaRepository<Folder, Integer> {
+public interface FolderDao extends JpaRepository<Folder, Long> {
 
     @Modifying
     @Transactional
