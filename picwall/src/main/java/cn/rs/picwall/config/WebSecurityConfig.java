@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/upload").authenticated()
+                .antMatchers("/upload", "/folder").authenticated()
                 .and()
                 .formLogin();
     }

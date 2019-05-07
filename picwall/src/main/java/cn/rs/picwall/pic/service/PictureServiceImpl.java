@@ -1,7 +1,10 @@
 package cn.rs.picwall.pic.service;
 
+import cn.rs.picwall.pic.dao.FolderDao;
 import cn.rs.picwall.pic.dao.PicDao;
+import cn.rs.picwall.pic.pojo.entity.Folder;
 import cn.rs.picwall.pic.pojo.entity.Picture;
+import cn.rs.picwall.pic.pojo.entity.User;
 import cn.rs.picwall.pic.pojo.vo.Page;
 import cn.rs.picwall.pic.pojo.vo.PictureRequest;
 import cn.rs.picwall.pic.pojo.vo.PictureResponse;
@@ -20,28 +23,48 @@ import java.util.List;
 @Service
 public class PictureServiceImpl implements PictureService {
     private static final Logger logger = LoggerFactory.getLogger(PictureServiceImpl.class);
+    private static final int MAX_IMAGE_SIZE = 512 * 768;
+
+
+    @Autowired
+    private FolderDao folderDao;
 
     @Autowired
     private PicDao picDao;
 
     @Override
     public void save(byte[] picContent) {
-        int maxImageSize = 512 * 768;
         Picture pic = new Picture();
-        pic.setData(picContent.length > maxImageSize ? ImageUtil.resize(picContent, maxImageSize) : picContent);
+        pic.setData(picContent.length > MAX_IMAGE_SIZE ? ImageUtil.resize(picContent, MAX_IMAGE_SIZE) : picContent);
 
         picDao.save(pic);
     }
 
     @Override
     public void save(PictureRequest pictureRequest) {
-        int maxImageSize = 512 * 768;
+        logger.info("Save picture {} into folder : {}", pictureRequest.getName(), pictureRequest.getFolder());
+        Folder folder = folderDao.findByFolderNameAndUserName(pictureRequest.getFolder(), pictureRequest.getUser());
+
         Picture picture = new Picture();
         picture.setName(pictureRequest.getName());
-        picture.setData(pictureRequest.getContent().length > maxImageSize ?
-                ImageUtil.resize(pictureRequest.getContent(), maxImageSize) : pictureRequest.getContent());
+        picture.setData(pictureRequest.getContent().length > MAX_IMAGE_SIZE ?
+                ImageUtil.resize(pictureRequest.getContent(), MAX_IMAGE_SIZE) : pictureRequest.getContent());
+        picture.setFolder(folder);
 
         picDao.save(picture);
+    }
+
+    @Override
+    public List<PictureResponse> findByFolder(String folderName, String userName) {
+        List<Picture> pictures = picDao.findByFolder(folderDao.findByFolderNameAndUserName(folderName, userName));
+
+        List<PictureResponse> images = new ArrayList<>();
+        for (Picture p : pictures) {
+            PictureResponse pv = new PictureResponse(p.getId(), "data:image/png;base64," + Base64.getEncoder().encodeToString(p.getData()));
+            images.add(pv);
+        }
+
+        return images;
     }
 
     @Override
@@ -62,7 +85,7 @@ public class PictureServiceImpl implements PictureService {
     @Override
     public List<PictureResponse> findForPager(Page page) {
 
-        if (page == null || page.getNumber() <= 0){
+        if (page == null || page.getNumber() <= 0) {
             page = new Page();
             page.setSize(DEFAULT_PAGE_SIZE);
             page.setNumber(1);

@@ -8,17 +8,26 @@
 <body>
 
 <div style="margin-left:5%;">
-    <div style="height: 49px;"><h3>标题栏</h3></div>
     <div style="height: 50px;"><h3>导航栏</h3></div>
+    <hr/>
     <div style="height: 500px;">
-        <h3>内容</h3>
         <div>
-            <li><img src="../img/folder01.png" width="3%"/> <a href="#">我的图片01</a></li>
-            <li><img src="../img/folder01.png" width="3%"/> <a href="#">我的图片02</a></li>
-            <li><img src="../img/folder01.png" width="3%"/> <a href="#">我的图片03</a></li>
+            <span th:each="folder : ${folders}">
+                <li><img src="../img/folder01.png" width="3%"/>&nbsp;<a href="#" th:onclick="goIntoFolder(this)" th:text="${folder.name}"/></li>
+            </span>
         </div>
     </div>
 </div>
 
 </body>
+
+<script type="text/javascript">
+
+    function goIntoFolder(currentFolder){
+        console.log('current folder is : ' + currentFolder.text);
+
+    }
+
+</script>
+
 </html>

@@ -21,12 +21,17 @@ public class UserDaoTest {
 
 
 //    @Transactional
-    @Test
+//    @Test
     public void save(){
         User user = new User();
         user.setName("tester1");
         user.setPassword("123456");
         userDao.save(user);
+        Assert.assertNotNull(userDao.findByName("tester1"));
+    }
+
+    @Test
+    public void test_findByName(){
         Assert.assertNotNull(userDao.findByName("tester1"));
     }
 
