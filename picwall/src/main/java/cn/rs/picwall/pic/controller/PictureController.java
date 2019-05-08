@@ -1,14 +1,12 @@
 package cn.rs.picwall.pic.controller;
 
-import cn.rs.picwall.pic.dao.FolderDao;
-import cn.rs.picwall.pic.dao.PicDao;
-import cn.rs.picwall.pic.pojo.entity.Folder;
 import cn.rs.picwall.pic.pojo.exception.ServiceException;
 import cn.rs.picwall.pic.pojo.vo.PictureRequest;
 import cn.rs.picwall.pic.service.PictureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +41,7 @@ public class PictureController implements HandlerExceptionResolver {
         logger.info("Query pictures of {} in folder: {}", user.getUsername(), folder);
 
         model.addAttribute("files", pictureService.findByFolder(folder, user.getUsername()));
+        model.addAttribute("currentFolder", folder);
 
         return "picUpload";
     }
@@ -76,6 +76,12 @@ public class PictureController implements HandlerExceptionResolver {
     @PostMapping
     public String handleFileUpload(@RequestParam("files") MultipartFile[] files, @RequestParam("folder") String folder,
                                    RedirectAttributes redirectAttributes) {
+        String encodedFolder = null;
+        try {
+            encodedFolder = new String(folder.getBytes(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if (files != null && files.length > 0) {
             String fileNames = "";
             for (MultipartFile file : files) {
@@ -99,10 +105,10 @@ public class PictureController implements HandlerExceptionResolver {
         } else {
             redirectAttributes.addFlashAttribute("message",
                     "No file selected !");
-            return "redirect:/pic";
+            return "redirect:/pic?folder=" + encodedFolder;
         }
 
-        return "redirect:/pic";
+        return "redirect:/pic?folder=" + encodedFolder;
     }
 
     @DeleteMapping
@@ -117,11 +123,14 @@ public class PictureController implements HandlerExceptionResolver {
         return ResponseEntity.ok().body("System error: " + e.getMessage());
     }
 
+    @Value("${spring.servlet.multipart.max-request-size}")
+    private String maxSize;
+
     @Override
     public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         Map<String, Object> model = new HashMap<>();
         if (ex instanceof MaxUploadSizeExceededException) {
-            model.put("errors", "Maximum upload size exceeded.");
+            model.put("errors", "Maximum upload size " + maxSize + " exceeded.");
             logger.error("Exceed max upload size.{}", ex.getMessage());
         } else {
             model.put("errors", "Unexpected error: " + "System error.");

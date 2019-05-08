@@ -42,7 +42,6 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public void save(PictureRequest pictureRequest) {
-        logger.info("Save picture {} into folder : {}", pictureRequest.getName(), pictureRequest.getFolder());
         Folder folder = folderDao.findByFolderNameAndUserName(pictureRequest.getFolder(), pictureRequest.getUser());
 
         Picture picture = new Picture();
@@ -51,6 +50,9 @@ public class PictureServiceImpl implements PictureService {
                 ImageUtil.resize(pictureRequest.getContent(), MAX_IMAGE_SIZE) : pictureRequest.getContent());
         picture.setFolder(folder);
 
+        logger.info("size of picture.data: {}", picture.getData().length);
+
+        logger.info("Save picture {} into folder : {}", pictureRequest.getName(), pictureRequest.getFolder());
         picDao.save(picture);
     }
 

@@ -2,7 +2,6 @@ function setDownEventForEnterKey(callback){
 	document.onkeydown = function (e) {
       if (!e) e = window.event;
       if ((e.keyCode || e.which) == 13) {
-//    	  document.getElementById('btnGenerate').click();
     	  callback();
       }
     }

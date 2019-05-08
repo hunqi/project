@@ -1,8 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<head th:include="head :: head">
     <title>Pic Wall - Folder</title>
 </head>
 <body>
@@ -13,21 +11,12 @@
     <div style="height: 500px;">
         <div>
             <span th:each="folder : ${folders}">
-                <li><img src="../img/folder01.png" width="3%"/>&nbsp;<a href="#" th:onclick="goIntoFolder(this)" th:text="${folder.name}"/></li>
+                <li><img src="../img/folder01.png" width="3%"/>&nbsp;<a href="#" th:onclick="goIntoFolder(this)"
+                                                                        th:text="${folder.name}"/></li>
             </span>
         </div>
     </div>
 </div>
-
+<script th:src="@{/js/biz/folder.js}" type="text/javascript"></script>
 </body>
-
-<script type="text/javascript">
-
-    function goIntoFolder(currentFolder){
-        console.log('current folder is : ' + currentFolder.text);
-
-    }
-
-</script>
-
 </html>
